@@ -55,7 +55,7 @@ namespace BookAndMovie.Web.Controllers
 
             var newBook = this.mapper.Map<Book>(book);
             await this.bookService.CreateBook(newBook);
-            var bookViewModel = this.mapper.Map<CreateBookViewModel>(newBook);
+            var bookViewModel = this.mapper.Map<BookViewModel>(newBook);
 
             return CreatedAtRoute("GetBookById", new { id = bookViewModel.Id }, bookViewModel); ;
         }

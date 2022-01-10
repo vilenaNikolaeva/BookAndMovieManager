@@ -4,14 +4,16 @@ using BookAndMovie.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookAndMovie.Data.Migrations
 {
     [DbContext(typeof(BookAndMovieDbContext))]
-    partial class BookAndMovieDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220110180717_udateBookController")]
+    partial class udateBookController
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

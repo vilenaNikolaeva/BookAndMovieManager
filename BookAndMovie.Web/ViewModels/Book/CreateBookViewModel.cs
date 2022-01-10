@@ -8,11 +8,11 @@ namespace BookAndMovie.Web.ViewModels.Book
 {
     public class CreateBookViewModel
     {
-        public string Id { get; set; }
         public string Title { get; set; }
         [Required]
-        [MaxLength(100)]
-        public string BookImageId { get; set; }
+        public string BookImageUrl { get; set; }
+        public string BookFileUrl { get; set; }
+
         public string Author { get; set; }
         public bool Readed { get; set; }
         public int Review { get; set; }

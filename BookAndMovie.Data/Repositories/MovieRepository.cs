@@ -17,6 +17,8 @@ namespace BookAndMovie.Data.Repositories
 
         public async Task<Movie> CreateMovieAsync(Movie movie)
         {
+            var guid = Guid.NewGuid();
+            movie.Id = guid.ToString();
             await this.context.Movies.AddAsync(movie);
             await this.context.SaveChangesAsync();
             return movie;

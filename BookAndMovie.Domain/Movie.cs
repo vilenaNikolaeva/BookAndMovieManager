@@ -10,12 +10,9 @@ namespace BookAndMovie.Domain
     public class Movie
     {
         public string Id { get; set; }
-        [Required]
-        [MaxLength(100)]
         public string Title { get; set; }
-        [Required]
-        [MaxLength(100)]
         public string MovieUrl { get; set; }
+        public string MovieImageUrl { get; set; }
         public string  FilmGenre { get; set; }
         public bool Watched { get; set; }
         public int Review { get; set; }

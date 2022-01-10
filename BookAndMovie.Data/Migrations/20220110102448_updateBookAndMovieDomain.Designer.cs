@@ -4,14 +4,16 @@ using BookAndMovie.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookAndMovie.Data.Migrations
 {
     [DbContext(typeof(BookAndMovieDbContext))]
-    partial class BookAndMovieDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220110102448_updateBookAndMovieDomain")]
+    partial class updateBookAndMovieDomain
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -293,7 +295,7 @@ namespace BookAndMovie.Data.Migrations
             modelBuilder.Entity("BookAndMovie.Domain.Movie", b =>
                 {
                     b.HasOne("BookAndMovie.Domain.User", "User")
-                        .WithMany("Movies")
+                        .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
@@ -353,8 +355,6 @@ namespace BookAndMovie.Data.Migrations
             modelBuilder.Entity("BookAndMovie.Domain.User", b =>
                 {
                     b.Navigation("Books");
-
-                    b.Navigation("Movies");
                 });
 #pragma warning restore 612, 618
         }

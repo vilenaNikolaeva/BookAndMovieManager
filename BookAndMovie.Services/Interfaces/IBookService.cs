@@ -17,5 +17,6 @@ namespace BookAndMovie.Services.Interfaces
         public Task<IList<Book>> GetAllReadedBookByUserIdsAsync(string id);
         public Task<IList<Book>> GetAllUnreadedBookByUserIdsAsync(string id);
         public Task<Book> UpdateBookStatysByUserId(string userId, Book book);
+
     }
 }
