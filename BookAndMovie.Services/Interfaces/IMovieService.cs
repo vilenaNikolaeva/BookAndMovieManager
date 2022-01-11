@@ -12,9 +12,5 @@ namespace BookAndMovie.Services.Interfaces
         public Task<Movie> FindByIdAsync(string id);
         public Task<Movie> CreateMovieAsync(Movie movie);
         public Task<IList<Movie>> GetAllMoviesAsync();
-        public Task<IList<Movie>> GetAllMovieByUserIdAsync(string id);
-        public Task<IList<Movie>> GetAllWatchedMovieByUserIdsAsync(string id);
-        public Task<IList<Movie>> GetAllUnwatchedMovieByUserIdsAsync(string id);
-        public Task<Movie> UpdateMovieStatysByUserId(string userId, Movie movie);
     }
 }

@@ -7,6 +7,5 @@ namespace BookAndMovie.Domain
     {
         public ICollection<Book> Books { get; set; }
         public ICollection<Movie> Movies{ get; set; }
-
     }
 }

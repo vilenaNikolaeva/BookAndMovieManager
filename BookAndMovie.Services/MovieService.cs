@@ -25,29 +25,9 @@ namespace BookAndMovie.Services
             return await this.movieRepository.FindByIdAsync(id);
         }
 
-        public async Task<IList<Movie>> GetAllMovieByUserIdAsync(string id)
-        {
-            return await this.movieRepository.GetAllMovieByUserIdAsync(id);
-        }
-
-        public async  Task<IList<Movie>> GetAllMoviesAsync()
+        public async Task<IList<Movie>> GetAllMoviesAsync()
         {
             return await this.movieRepository.GetAllMoviesAsync();
-        }
-
-        public async Task<IList<Movie>> GetAllUnwatchedMovieByUserIdsAsync(string id)
-        {
-            return await this.movieRepository.GetAllUnwatchedMovieByUserIdsAsync(id);
-        }
-
-        public async  Task<IList<Movie>> GetAllWatchedMovieByUserIdsAsync(string id)
-        {
-            return await this.movieRepository.GetAllWatchedMovieByUserIdsAsync(id);
-        }
-
-        public async Task<Movie> UpdateMovieStatysByUserId(string userId, Movie movie)
-        {
-            return await this.movieRepository.UpdateMovieStatysByUserId(userId, movie);
         }
     }
 }

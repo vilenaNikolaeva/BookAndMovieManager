@@ -36,33 +36,5 @@ namespace BookAndMovie.Data.Repositories
             var books = await this.context.Books.ToListAsync();
             return books;
         }
-
-        public async Task<IList<Book>> GetAllBooksByUserIdAsync(string id)
-        {
-            var userBooks = await this.context.Books.Where(b => b.Users.Select(u=>u.Id).Contains(id)).ToListAsync();
-            return userBooks;
-        }
-
-        public async Task<IList<Book>> GetAllReadedBookByUserIdsAsync(string id)
-        {
-            var readedBooks = await this.context.Books.Where(b => b.Users.Select(u => u.Id).Contains(id) && b.Readed == true).ToListAsync();
-            return readedBooks;
-        }
-
-        public async Task<IList<Book>> GetAllUnreadedBookByUserIdsAsync(string id)
-        {
-            var unreadedBooks = await this.context.Books.Where(b => b.Users.Select(u => u.Id).Contains(id) && b.Readed == false).ToListAsync();
-            return unreadedBooks;
-        }
-
-        public async Task<Book> UpdateBookStatysByUserId(string userId, Book book)
-        {
-            var bookForUpdate = await this.FindByIdAsync(book.Id);
-            bookForUpdate.Readed = book.Readed;
-            this.context.Books.Update(bookForUpdate);
-            await this.context.SaveChangesAsync();
-            return bookForUpdate;
-        }
-      
     }
 }

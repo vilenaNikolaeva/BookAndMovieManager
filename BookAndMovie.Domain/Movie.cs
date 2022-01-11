@@ -16,7 +16,6 @@ namespace BookAndMovie.Domain
         public string  FilmGenre { get; set; }
         public bool Watched { get; set; }
         public int Review { get; set; }
-        public string UserId { get; set; }
-        public User User { get; set; }
+        public ICollection<User> Users { get; set; }
     }
 }

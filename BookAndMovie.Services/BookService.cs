@@ -30,28 +30,6 @@ namespace BookAndMovie.Services
             return allBooks;
         }
 
-        public async Task<IList<Book>> GetAllBooksByUserIdAsync(string id)
-        {
-            var userBooks = await this.bookRepository.GetAllBooksByUserIdAsync(id);
-            return userBooks;
-        }
-
-        public  async Task<IList<Book>> GetAllReadedBookByUserIdsAsync(string id)
-        {
-            var readedBooks = await this.bookRepository.GetAllReadedBookByUserIdsAsync(id);
-            return readedBooks;
-        }
-
-        public async Task<IList<Book>> GetAllUnreadedBookByUserIdsAsync(string id)
-        {
-            var unreadedBooks = await this.bookRepository.GetAllUnreadedBookByUserIdsAsync(id);
-            return unreadedBooks;
-        }
-
-        public async Task<Book> UpdateBookStatysByUserId(string userId, Book book)
-        {
-            var updatedBookStatus = await this.bookRepository.UpdateBookStatysByUserId(userId, book);
-            return updatedBookStatus;
-        }
+        
     }
 }
