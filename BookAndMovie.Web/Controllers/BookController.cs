@@ -60,6 +60,23 @@ namespace BookAndMovie.Web.Controllers
             return CreatedAtRoute("GetBookById", new { id = bookViewModel.Id }, bookViewModel); ;
         }
 
+        //[HttpPost("{id}")]
+        //[ProducesResponseType(StatusCodes.Status201Created)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //public async Task<ActionResult> CreateBook(CreateBookViewModel book)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    var newBook = this.mapper.Map<Book>(book);
+        //    await this.bookService.CreateBook(newBook);
+        //    var bookViewModel = this.mapper.Map<BookViewModel>(newBook);
+
+        //    return CreatedAtRoute("GetBookById", new { id = bookViewModel.Id }, bookViewModel); ;
+        //}
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -83,16 +100,16 @@ namespace BookAndMovie.Web.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> GetAllBooksByUserIdAsync(string id)
         {
-            var userBookd = await this.bookService.GetAllBooksByUserIdAsync(id);
+            var userBooks = await this.bookService.GetAllBooksByUserIdAsync(id);
 
-            if (userBookd == null)
+            if (userBooks == null)
             {
                 return NotFound();
             }
 
-            var booksViewModels = this.mapper.Map<CreateBookViewModel>(userBookd);
+            //var booksViewModels = this.mapper.Map<BookViewModel>(userBooks);
 
-            return Ok(booksViewModels);
+            return Ok(userBooks);
         }
 
         [HttpGet]

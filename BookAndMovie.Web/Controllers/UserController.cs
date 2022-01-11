@@ -20,14 +20,18 @@ namespace BookAndMovie.Web.Controllers
         }
 
 
-        [HttpGet]
-        [Route("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [HttpPost("{id}")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> GetUserById (string id)
+        public async Task<ActionResult> AddBookToUserLibraryByIdAsync(string userId, string id)
         {
-            var user = await this._userService.GetUserByIdAsync(id);
-            return Ok(user);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await this._userService.AddBookToLibraryById(userId, id);
+            return Ok();
         }
     }
 }

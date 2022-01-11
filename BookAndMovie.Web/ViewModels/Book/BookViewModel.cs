@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using BookAndMovie.Domain;
 
 namespace BookAndMovie.Web.ViewModels.Book
 {
@@ -15,6 +12,5 @@ namespace BookAndMovie.Web.ViewModels.Book
         public string Author { get; set; }
         public bool Readed { get; set; }
         public int Review { get; set; }
-
     }
 }

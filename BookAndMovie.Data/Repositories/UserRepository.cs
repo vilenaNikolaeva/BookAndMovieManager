@@ -32,5 +32,12 @@ namespace BookAndMovie.Data.Repositories
             var user = await this.FindByIdAsync(id);
             return user;
         }
+        public async Task AddBookToLibraryById(string userId, string id)
+        {
+            var book = await this.context.Books.FindAsync(id);
+            var user = await this.context.Users.Include(u => u.Books).SingleOrDefaultAsync(u => u.Id == userId);
+            user.Books.Add(book);
+            await this.context.SaveChangesAsync();
+        }
     }
 }

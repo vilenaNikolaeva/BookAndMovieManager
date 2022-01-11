@@ -42,12 +42,7 @@ namespace BookAndMovie.Data.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Books");
                 });
@@ -148,6 +143,21 @@ namespace BookAndMovie.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("BookUser", b =>
+                {
+                    b.Property<string>("BooksId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsersId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("BooksId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("BookUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -281,15 +291,6 @@ namespace BookAndMovie.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("BookAndMovie.Domain.Book", b =>
-                {
-                    b.HasOne("BookAndMovie.Domain.User", "User")
-                        .WithMany("Books")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("BookAndMovie.Domain.Movie", b =>
                 {
                     b.HasOne("BookAndMovie.Domain.User", "User")
@@ -297,6 +298,21 @@ namespace BookAndMovie.Data.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BookUser", b =>
+                {
+                    b.HasOne("BookAndMovie.Domain.Book", null)
+                        .WithMany()
+                        .HasForeignKey("BooksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BookAndMovie.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -352,8 +368,6 @@ namespace BookAndMovie.Data.Migrations
 
             modelBuilder.Entity("BookAndMovie.Domain.User", b =>
                 {
-                    b.Navigation("Books");
-
                     b.Navigation("Movies");
                 });
 #pragma warning restore 612, 618

@@ -39,19 +39,19 @@ namespace BookAndMovie.Data.Repositories
 
         public async Task<IList<Book>> GetAllBooksByUserIdAsync(string id)
         {
-            var userBooks = await this.context.Books.Where(b => b.UserId == id).ToListAsync();
+            var userBooks = await this.context.Books.Where(b => b.Users.Select(u=>u.Id).Contains(id)).ToListAsync();
             return userBooks;
         }
 
         public async Task<IList<Book>> GetAllReadedBookByUserIdsAsync(string id)
         {
-            var readedBooks = await this.context.Books.Where(u => u.UserId == id && u.Readed == true).ToListAsync();
+            var readedBooks = await this.context.Books.Where(b => b.Users.Select(u => u.Id).Contains(id) && b.Readed == true).ToListAsync();
             return readedBooks;
         }
 
         public async Task<IList<Book>> GetAllUnreadedBookByUserIdsAsync(string id)
         {
-            var unreadedBooks = await this.context.Books.Where(u => u.UserId == id && u.Readed == false).ToListAsync();
+            var unreadedBooks = await this.context.Books.Where(b => b.Users.Select(u => u.Id).Contains(id) && b.Readed == false).ToListAsync();
             return unreadedBooks;
         }
 
@@ -63,5 +63,6 @@ namespace BookAndMovie.Data.Repositories
             await this.context.SaveChangesAsync();
             return bookForUpdate;
         }
+      
     }
 }

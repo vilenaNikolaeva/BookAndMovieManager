@@ -15,6 +15,11 @@ namespace BookAndMovie.Services
             this.userRepository = userRepository;
         }
 
+        public async Task AddBookToLibraryById(string userId, string id)
+        {
+            await this.userRepository.AddBookToLibraryById(userId, id);
+        }
+
         public async Task<User> AddUserAsync(User newUser)
         {
             await this.userRepository.AddUserAsync(newUser);

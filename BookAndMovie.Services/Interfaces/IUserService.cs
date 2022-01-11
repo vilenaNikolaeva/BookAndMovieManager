@@ -7,6 +7,8 @@ namespace BookAndMovie.Services.Interfaces
     {
         public Task<User> AddUserAsync(User newUser);
         public Task<User> GetUserByIdAsync(string id);
+        public Task AddBookToLibraryById(string userId, string id);
+
         //public Task<IList<Books>> GetAllUserBooks(string id);
         //public Task<IList<Movies>> GetAllUserMovies(string id);
         //public Task<IList<Series>> GetAllUserSeries(string id);

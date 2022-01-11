@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace BookAndMovie.Domain
 {
@@ -10,8 +11,7 @@ namespace BookAndMovie.Domain
         public string BookFileUrl { get; set; }
         public string Author { get; set; }
         public bool Readed { get; set; }
-        public string UserId { get; set; }
-        public User User { get; set; }
         public int Review { get; set; }
+        public ICollection<User> Users{ get; set; }
     }
 }
