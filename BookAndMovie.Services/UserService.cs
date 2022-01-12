@@ -58,7 +58,10 @@ namespace BookAndMovie.Services
             var updatedBookStatus = await this.userRepository.UpdateBookStatysByUserId(userId, book);
             return updatedBookStatus;
         }
-
+        public async Task AddMovieToLibraryById(string userId, string id)
+        {
+             await this.userRepository.AddMovieToLibraryById(userId, id);
+        }
         public async  Task<IList<Movie>> GetAllMovieByUserIdAsync(string id)
         {
            return await this.userRepository.GetAllMovieByUserIdAsync(id);
@@ -77,6 +80,11 @@ namespace BookAndMovie.Services
         public Task<Movie> UpdateMovieStatysByUserId(string userId, Movie movie)
         {
             return this.userRepository.UpdateMovieStatysByUserId(userId, movie);
+        }
+
+        public async Task DeleteMovieFromUserListAsync(string userId, string id)
+        {
+            await this.userRepository.DeleteMovieFromUserListAsync(userId, id);
         }
     }
 }

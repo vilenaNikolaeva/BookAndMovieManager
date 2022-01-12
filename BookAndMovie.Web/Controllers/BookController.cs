@@ -46,7 +46,7 @@ namespace BookAndMovie.Web.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> CreateBook(CreateBookViewModel book)
+        public async Task<ActionResult> CreateBookAsync (CreateBookViewModel book)
         {
             if (!ModelState.IsValid)
             {
@@ -57,7 +57,7 @@ namespace BookAndMovie.Web.Controllers
             await this.bookService.CreateBook(newBook);
             var bookViewModel = this.mapper.Map<BookViewModel>(newBook);
 
-            return CreatedAtRoute("GetBookById", new { id = bookViewModel.Id }, bookViewModel); ;
+            return CreatedAtRoute("GetBookById", new { id = bookViewModel.Id }, bookViewModel);
         }
 
         //[HttpPost("{id}")]

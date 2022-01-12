@@ -76,7 +76,14 @@ namespace BookAndMovie.Data.Repositories
             await this.context.SaveChangesAsync();
             return bookForUpdate;
         }
-
+          // <=========== MOVIE
+        public async Task AddMovieToLibraryById(string userId, string id)
+        {
+            var movie = await this.context.Movies.FindAsync(id);
+            var user = await this.context.Users.Include(u => u.Movies).SingleOrDefaultAsync(u => u.Id == userId);
+            user.Movies.Add(movie);
+            await this.context.SaveChangesAsync();
+        }
         public async Task<IList<Movie>> GetAllMovieByUserIdAsync(string id)
         {
             var movies = await this.context.Movies.Where(b => b.Users.Select(u => u.Id).Contains(id)).ToListAsync();
@@ -104,6 +111,14 @@ namespace BookAndMovie.Data.Repositories
             //this.context.Movies.Update(movieForUpdate); //????????
             await this.context.SaveChangesAsync();
             return movieForUpdate;
+        }
+
+        public async Task DeleteMovieFromUserListAsync(string userId, string id)
+        {
+            var movie = await this.context.Movies.FindAsync(id);
+            var user = await this.context.Users.Include(u => u.Movies).SingleOrDefaultAsync(u => u.Id == userId);
+            user.Movies.Remove(movie);
+            await this.context.SaveChangesAsync();
         }
     }
 }

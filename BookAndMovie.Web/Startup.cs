@@ -94,6 +94,10 @@ namespace BookAndMovie.Web
                     }
                 });
             });
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
             //Add context
             services.AddDbContext<BookAndMovieDbContext>(options =>
                 options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));

@@ -27,6 +27,7 @@ namespace BookAndMovie.Web.Controllers
 
 
         [HttpPost]
+        [Route("Book")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> AddBookToUserLibraryByIdAsync(string userId, string id)
@@ -40,15 +41,15 @@ namespace BookAndMovie.Web.Controllers
             return Ok();
         }
         [HttpDelete]
+        [Route("Book")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> DeleteBookFromUserListAsync (string userId, string id)
         {
             await this.userService.DeleteBookFromUserListAsync(userId, id);
-            return Ok();
+            return await this.GetAllBooksByUserIdAsync(userId);
         }
-        
-        
+
         [HttpGet]
         [Route("Books")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -122,8 +123,33 @@ namespace BookAndMovie.Web.Controllers
 
         ////  <=== MOVIES
 
+        [HttpDelete]
+        [Route("Movie")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> DeleteMovieFromUserListAsync(string userId, string id)
+        {
+            await this.userService.DeleteMovieFromUserListAsync(userId, id);
+            return await this.GetAllMoviesByUserIdAsync(userId);
+        }
+
+        [HttpPost]
+        [Route("Movie")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> AddMovieToUserLibraryByIdAsync(string userId, string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await this.userService.AddMovieToLibraryById(userId, id);
+            return Ok();
+        }
+
         [HttpGet]
-        [Route("allMovies")]
+        [Route("Movies")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> GetAllMoviesByUserIdAsync(string id)
@@ -135,9 +161,9 @@ namespace BookAndMovie.Web.Controllers
                 return NotFound();
             }
 
-            var moviesViewModels = this.mapper.Map<MovieViewModel>(userMovies);
+            //var moviesViewModels = this.mapper.Map<MovieViewModel>(userMovies);
 
-            return Ok(moviesViewModels);
+            return Ok(userMovies);
         }
 
         [HttpGet]
