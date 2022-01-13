@@ -15,7 +15,7 @@ namespace BookAndMovie.Web.ViewModels.Book
 
         public string Author { get; set; }
         public bool Readed { get; set; }
-        public int Review { get; set; }
+        public double Rating { get; set; }
 
     }
 }

@@ -11,7 +11,10 @@ namespace BookAndMovie.Domain
         public string BookFileUrl { get; set; }
         public string Author { get; set; }
         public bool Readed { get; set; }
-        public int Review { get; set; }
+        public double Rating { get; set; }
+        public int RatingCount { get; set; }
         public ICollection<User> Users{ get; set; }
+
+
     }
 }

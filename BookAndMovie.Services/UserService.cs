@@ -19,6 +19,11 @@ namespace BookAndMovie.Services
         {
             return await this.userRepository.GetUserByIdAsync(id);
         }
+        public async Task<BooksRating> AddBookRatingByUserAndBookId(BooksRating bookRating)
+        {
+           var ratedBook=  await this.userRepository.AddBookRatingByUserAndBookId(bookRating);
+            return ratedBook;
+        }
         public async Task AddBookToLibraryById(string userId, string id)
         {
             await this.userRepository.AddBookToLibraryById(userId, id);
@@ -85,6 +90,12 @@ namespace BookAndMovie.Services
         public async Task DeleteMovieFromUserListAsync(string userId, string id)
         {
             await this.userRepository.DeleteMovieFromUserListAsync(userId, id);
+        }
+
+        public async  Task<MoviesRating> AddMovieRatingByUserAndMovieId(MoviesRating movie)
+        {
+            var ratedMovie = await this.userRepository.AddMovieRatingByUserAndMovieId(movie);
+            return ratedMovie;
         }
     }
 }

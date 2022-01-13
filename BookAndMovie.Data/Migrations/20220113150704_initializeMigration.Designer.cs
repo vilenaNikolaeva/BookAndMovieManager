@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookAndMovie.Data.Migrations
 {
     [DbContext(typeof(BookAndMovieDbContext))]
-    [Migration("20220110185837_initializeDatabase")]
-    partial class initializeDatabase
+    [Migration("20220113150704_initializeMigration")]
+    partial class initializeMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,11 +35,14 @@ namespace BookAndMovie.Data.Migrations
                     b.Property<string>("BookImageUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
+                    b.Property<int>("RatingCount")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Readed")
                         .HasColumnType("bit");
-
-                    b.Property<int>("Review")
-                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -47,6 +50,27 @@ namespace BookAndMovie.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("BookAndMovie.Domain.BooksRating", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("BookId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("BooksRating");
                 });
 
             modelBuilder.Entity("BookAndMovie.Domain.Movie", b =>
@@ -69,15 +93,10 @@ namespace BookAndMovie.Data.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<bool>("Watched")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Movies");
                 });
@@ -293,13 +312,26 @@ namespace BookAndMovie.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("BookAndMovie.Domain.Movie", b =>
+            modelBuilder.Entity("MovieUser", b =>
                 {
-                    b.HasOne("BookAndMovie.Domain.User", "User")
-                        .WithMany("Movies")
-                        .HasForeignKey("UserId");
+                    b.Property<string>("MoviesId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Navigation("User");
+                    b.Property<string>("UsersId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("MoviesId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("MovieUser");
+                });
+
+            modelBuilder.Entity("BookAndMovie.Domain.BooksRating", b =>
+                {
+                    b.HasOne("BookAndMovie.Domain.User", null)
+                        .WithMany("BooksRatings")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("BookUser", b =>
@@ -368,9 +400,24 @@ namespace BookAndMovie.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MovieUser", b =>
+                {
+                    b.HasOne("BookAndMovie.Domain.Movie", null)
+                        .WithMany()
+                        .HasForeignKey("MoviesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BookAndMovie.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("BookAndMovie.Domain.User", b =>
                 {
-                    b.Navigation("Movies");
+                    b.Navigation("BooksRatings");
                 });
 #pragma warning restore 612, 618
         }

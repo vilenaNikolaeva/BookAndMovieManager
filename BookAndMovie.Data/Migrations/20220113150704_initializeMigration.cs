@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BookAndMovie.Data.Migrations
 {
-    public partial class initializeDatabase : Migration
+    public partial class initializeMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -56,11 +56,29 @@ namespace BookAndMovie.Data.Migrations
                     BookFileUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Author = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Readed = table.Column<bool>(type: "bit", nullable: false),
-                    Review = table.Column<int>(type: "int", nullable: false)
+                    Rating = table.Column<double>(type: "float", nullable: false),
+                    RatingCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Books", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Movies",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MovieUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MovieImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FilmGenre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Watched = table.Column<bool>(type: "bit", nullable: false),
+                    Review = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Movies", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -170,23 +188,19 @@ namespace BookAndMovie.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Movies",
+                name: "BooksRating",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MovieUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MovieImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FilmGenre = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Watched = table.Column<bool>(type: "bit", nullable: false),
-                    Review = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    BookId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Rating = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Movies", x => x.Id);
+                    table.PrimaryKey("PK_BooksRating", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Movies_AspNetUsers_UserId",
+                        name: "FK_BooksRating_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -213,6 +227,30 @@ namespace BookAndMovie.Data.Migrations
                         name: "FK_BookUser_Books_BooksId",
                         column: x => x.BooksId,
                         principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MovieUser",
+                columns: table => new
+                {
+                    MoviesId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UsersId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MovieUser", x => new { x.MoviesId, x.UsersId });
+                    table.ForeignKey(
+                        name: "FK_MovieUser_AspNetUsers_UsersId",
+                        column: x => x.UsersId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MovieUser_Movies_MoviesId",
+                        column: x => x.MoviesId,
+                        principalTable: "Movies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -257,14 +295,19 @@ namespace BookAndMovie.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BooksRating_UserId",
+                table: "BooksRating",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BookUser_UsersId",
                 table: "BookUser",
                 column: "UsersId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Movies_UserId",
-                table: "Movies",
-                column: "UserId");
+                name: "IX_MovieUser_UsersId",
+                table: "MovieUser",
+                column: "UsersId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -285,10 +328,13 @@ namespace BookAndMovie.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "BooksRating");
+
+            migrationBuilder.DropTable(
                 name: "BookUser");
 
             migrationBuilder.DropTable(
-                name: "Movies");
+                name: "MovieUser");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -298,6 +344,9 @@ namespace BookAndMovie.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Movies");
         }
     }
 }

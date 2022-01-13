@@ -36,5 +36,6 @@ namespace BookAndMovie.Data.Repositories
             var books = await this.context.Books.ToListAsync();
             return books;
         }
+
     }
 }

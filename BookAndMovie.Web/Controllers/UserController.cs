@@ -2,7 +2,9 @@
 using BookAndMovie.Domain;
 using BookAndMovie.Services.Interfaces;
 using BookAndMovie.Web.ViewModels.Book;
+using BookAndMovie.Web.ViewModels.BookRating;
 using BookAndMovie.Web.ViewModels.Movie;
+using BookAndMovie.Web.ViewModels.MovieRating;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +27,21 @@ namespace BookAndMovie.Web.Controllers
             this.mapper = mapper;
         }
 
+        [HttpPost]
+        [Route("BookRating")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> AddBookRatingByUserAndBookId(CreateBookRatingViewModel bookRating)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var bookRatingsViewModel = this.mapper.Map<BooksRating>(bookRating);
+
+            var ratedBook = await this.userService.AddBookRatingByUserAndBookId(bookRatingsViewModel);
+            return Ok(ratedBook);
+        }
 
         [HttpPost]
         [Route("Book")]
@@ -122,6 +139,22 @@ namespace BookAndMovie.Web.Controllers
         }
 
         ////  <=== MOVIES
+
+        [HttpPost]
+        [Route("MovieRating")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> AddMovieRatingByUserAndMovieId(CreateMovieRatingViewModel movie)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var movieRatingsViewModel = this.mapper.Map<MoviesRating>(movie);
+
+            var ratedMovie = await this.userService.AddMovieRatingByUserAndMovieId(movieRatingsViewModel);
+            return Ok(ratedMovie);
+        }
 
         [HttpDelete]
         [Route("Movie")]

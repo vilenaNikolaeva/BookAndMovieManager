@@ -33,11 +33,14 @@ namespace BookAndMovie.Data.Migrations
                     b.Property<string>("BookImageUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
+                    b.Property<int>("RatingCount")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Readed")
                         .HasColumnType("bit");
-
-                    b.Property<int>("Review")
-                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -45,6 +48,27 @@ namespace BookAndMovie.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("BookAndMovie.Domain.BooksRating", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("BookId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("BooksRating");
                 });
 
             modelBuilder.Entity("BookAndMovie.Domain.Movie", b =>
@@ -61,7 +85,10 @@ namespace BookAndMovie.Data.Migrations
                     b.Property<string>("MovieUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Review")
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
+                    b.Property<int>("RatingCount")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -73,6 +100,27 @@ namespace BookAndMovie.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Movies");
+                });
+
+            modelBuilder.Entity("BookAndMovie.Domain.MoviesRating", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("MovieId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MoviesRating");
                 });
 
             modelBuilder.Entity("BookAndMovie.Domain.User", b =>
@@ -301,6 +349,20 @@ namespace BookAndMovie.Data.Migrations
                     b.ToTable("MovieUser");
                 });
 
+            modelBuilder.Entity("BookAndMovie.Domain.BooksRating", b =>
+                {
+                    b.HasOne("BookAndMovie.Domain.User", null)
+                        .WithMany("BooksRatings")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("BookAndMovie.Domain.MoviesRating", b =>
+                {
+                    b.HasOne("BookAndMovie.Domain.User", null)
+                        .WithMany("MoviesRatings")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("BookUser", b =>
                 {
                     b.HasOne("BookAndMovie.Domain.Book", null)
@@ -380,6 +442,13 @@ namespace BookAndMovie.Data.Migrations
                         .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("BookAndMovie.Domain.User", b =>
+                {
+                    b.Navigation("BooksRatings");
+
+                    b.Navigation("MoviesRatings");
                 });
 #pragma warning restore 612, 618
         }
