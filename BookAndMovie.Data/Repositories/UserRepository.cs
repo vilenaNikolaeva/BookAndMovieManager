@@ -138,7 +138,7 @@ namespace BookAndMovie.Data.Repositories
             var currentMovie = this.context.Books.FindAsync(movie.Id);
             var user = await this.context.Users.Include(u => u.Movies).SingleOrDefaultAsync(u => u.Id == userId);
             var movieForUpdate = user.Movies.Where(i => i.Id == movie.Id).SingleOrDefault();
-            movieForUpdate = movie;
+            movieForUpdate.Watched = movie.Watched;
             //this.context.Movies.Update(movieForUpdate); //????????
             await this.context.SaveChangesAsync();
             return movieForUpdate;
