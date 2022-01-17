@@ -29,5 +29,10 @@ namespace BookAndMovie.Services
         {
             return await this.movieRepository.GetAllMoviesAsync();
         }
+
+        public async  Task<Movie> UpdateMovieIsWatched(string userId, string movieId, bool isWatched)
+        {
+            return await this.movieRepository.UpdateMovieIsWatched(userId, movieId, isWatched);
+        }
     }
 }

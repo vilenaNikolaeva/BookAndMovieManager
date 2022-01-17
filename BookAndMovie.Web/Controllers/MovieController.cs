@@ -59,6 +59,23 @@ namespace BookAndMovie.Web.Controllers
             return CreatedAtRoute("GetMovieById", new { id = movieViewModel.Id }, movieViewModel); ;
         }
 
+        [HttpPut]
+        [Route("watched")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> UpdateMovieIsWatched(string userId,string movieId, bool isWatched)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+             var movie= await this.movieService.UpdateMovieIsWatched(userId,movieId,isWatched);
+             var movieViewModel = this.mapper.Map<CreateMovieViewModel>(movie);
+
+            return Ok(movieViewModel);
+        }
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

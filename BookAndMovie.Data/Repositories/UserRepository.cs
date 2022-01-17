@@ -135,7 +135,7 @@ namespace BookAndMovie.Data.Repositories
 
         public async Task<Movie> UpdateMovieStatysByUserId(string userId, Movie movie)
         {
-            var currentMovie = this.context.Books.FindAsync(movie.Id);
+            var currentMovie = this.context.Movies.FindAsync(movie.Id);
             var user = await this.context.Users.Include(u => u.Movies).SingleOrDefaultAsync(u => u.Id == userId);
             var movieForUpdate = user.Movies.Where(i => i.Id == movie.Id).SingleOrDefault();
             movieForUpdate.Watched = movie.Watched;

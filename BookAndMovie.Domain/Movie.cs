@@ -14,8 +14,7 @@ namespace BookAndMovie.Domain
         public string MovieUrl { get; set; }
         public string MovieImageUrl { get; set; }
         public string  FilmGenre { get; set; }
-        public bool Watched { get; set; }
-        //public string Progress { get; set; }
+        public bool Watched { get; set; } = false;
         public double Rating { get; set; }
         public int RatingCount { get; set; }
         public ICollection<User> Users { get; set; }

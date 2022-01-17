@@ -34,5 +34,15 @@ namespace BookAndMovie.Data.Repositories
             var movies = await this.context.Movies.ToListAsync();
             return movies;
         }
+
+        public async Task<Movie> UpdateMovieIsWatched( string userId , string movieId , bool isWatched)
+        {
+            var user = await this.context.Users.Include(u => u.Movies).SingleOrDefaultAsync(u => u.Id == userId);
+
+            var movieForUpdate = user.Movies.Where(i => i.Id == movieId).SingleOrDefault();
+            movieForUpdate.Watched = isWatched;
+            await this.context.SaveChangesAsync();
+            return movieForUpdate;
+        }
     }
 }

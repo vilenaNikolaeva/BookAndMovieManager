@@ -14,7 +14,6 @@ namespace BookAndMovie.Web.ViewModels.Movie
         public string MovieUrl { get; set; }
         public string FilmGenre { get; set; }
         public bool Watched { get; set; }
-        //public string Progress { get; set; }
-        public int Review { get; set; }
+        public double Rating { get; set; }
     }
 }

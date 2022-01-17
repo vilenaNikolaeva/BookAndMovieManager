@@ -12,7 +12,6 @@ namespace BookAndMovie.Data.Repositories.Interfaces
         public Task<User> FindByIdAsync (string id);
         public Task<User> AddUserAsync(User newUser);
         public Task<User> GetUserByIdAsync (string id);
-
         public Task AddBookToLibraryById (string userId, string id);
         public Task DeleteBookFromUserListAsync(string userId, string id);
         public Task<IList<Book>> GetAllBooksByUserIdAsync(string id);
