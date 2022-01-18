@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 
 namespace BookAndMovie.Data
 {
@@ -14,7 +15,12 @@ namespace BookAndMovie.Data
         public BookAndMovieDbContext(DbContextOptions<BookAndMovieDbContext> contextOptions)
            : base(contextOptions)
         {
-
+            Database.EnsureCreated();
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Seed();
         }
     }
 }
